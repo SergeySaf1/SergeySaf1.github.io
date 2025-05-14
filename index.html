@@ -80,8 +80,7 @@
                 <h2 class="section-title">Мои работы</h2>
                 
                 <div class="portfolio-tabs">
-                    <button class="tab-btn active" data-category="all">Все работы</button>
-                    <button class="tab-btn" data-category="brows">Брови</button>
+                    <button class="tab-btn active" data-category="brows">Брови</button>
                     <button class="tab-btn" data-category="lashes">Ресницы</button>
                 </div>
                 
@@ -112,35 +111,33 @@
                         <form id="bookingForm">
                             <div class="form-group">
                                 <label for="name">Ваше имя</label>
-                                <input type="text" id="name" required>
-                            </div>
-
-                            <div class="form-group">
-                        <label for="service">Услуга</label>
-                        <select id="service" required>
-                            <option value="ламинирование">Ламинирование бровей</option>
-                            <option value="брови">Коррекция бровей</option>
-                            <option value="коррекция">Комплексная коррекция</option>
-                            <option value="комплекс">Комплекс (брови+ресницы)</option>
-                            <option value="ресницы">Ламинирование ресниц</option>
-                            <option value="выщипывание">Выщипывание бровей</option>
-                        </select>
-                    </div>
-                            <div class="form-group">
-                                <label for="phone">Телефон</label>
-                                <input type="tel" id="phone" required>
+                                <input type="text" id="name" placeholder="Введите ваше имя" required>
                             </div>
                             
-                            <div class="auth-methods">
-                                <button type="button" class="auth-btn telegram">
+                            <div class="form-group">
+                                <label for="service">Услуга</label>
+                                <select id="service" required>
+                                    <option value="ламинирование">Ламинирование бровей</option>
+                                    <option value="брови">Коррекция бровей</option>
+                                    <option value="коррекция">Комплексная коррекция</option>
+                                    <option value="комплекс">Комплекс (брови+ресницы)</option>
+                                    <option value="ресницы">Ламинирование ресниц</option>
+                                    <option value="выщипывание">Выщипывание бровей</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Телефон</label>
+                                <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+                            </div>
+                            
+                            <div class="social-buttons">
+                                <a href="https://t.me/Serg_sss3" class="social-btn telegram">
                                     <i class="fab fa-telegram"></i> Telegram
-                                </button>
-                                <button type="button" class="auth-btn whatsapp">
+                                </a>
+                                <a href="https://wa.me/79259713336" class="social-btn whatsapp">
                                     <i class="fab fa-whatsapp"></i> WhatsApp
-                                </button>
-                                <button type="button" class="auth-btn phone">
-                                    <i class="fas fa-phone"></i> По телефону
-                                </button>
+                                </a>
                             </div>
                             
                             <button type="submit" class="btn btn-primary">Подтвердить запись</button>

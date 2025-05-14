@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const portfolioGrid = document.querySelector('.portfolio-grid');
     const tabButtons = document.querySelectorAll('.tab-btn');
 
-    function renderPortfolio(category = 'all') {
+    function renderPortfolio(category = 'brows') {
         portfolioGrid.innerHTML = '';
         
         portfolioItems.forEach(item => {
@@ -72,6 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Инициализация
-    renderPortfolio();
+    // Инициализация - показываем только брови по умолчанию
+    renderPortfolio('brows');
 });
