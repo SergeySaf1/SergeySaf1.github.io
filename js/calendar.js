@@ -4,25 +4,24 @@ class BookingCalendar {
         this.currentDate = new Date();
         this.selectedDate = null;
         this.selectedTime = null;
-        this.workHours = ['09:30', '11:30', '13:30', '15:30', '17:30'];
+        this.workHours = ['09:30', '11:30', '13:00', '15:00', '17:00', '19:00']; // Обновленные временные слоты
         this.bookedSlots = [];
         
-        // Делаем экземпляр доступным глобально
         window.calendar = this;
         
         this.init();
     }
 
     async init() {
-        await this.loadBookingsFromGitLab();
+        await this.loadBookingsFromYandexTable();
         this.renderCalendar();
     }
 
     async loadBookingsFromYandexTable() {
         try {
-            const YANDEX_OAUTH_TOKEN = 'your_yandex_oauth_token'; // Замените на реальный токен
+            const YANDEX_OAUTH_TOKEN = 'your_yandex_oauth_token';
             const response = await fetch(
-                'https://cloud-api.yandex.net/v1/disk/resources/download?path=Записи.xlsx',
+                'https://cloud-api.yandex.net/v1/disk/resources/download?path=Новая таблица.xlsx',
                 { headers: { "Authorization": `OAuth ${YANDEX_OAUTH_TOKEN}` } }
             );
             const data = await response.json();
@@ -35,9 +34,10 @@ class BookingCalendar {
             }));
         } catch (error) {
             console.error("Ошибка загрузки данных:", error);
+            // Запасной вариант на случай ошибки
             this.bookedSlots = [
                 { date: '2025-06-15', time: '11:30' },
-                { date: '2025-06-16', time: '15:30' }
+                { date: '2025-06-16', time: '15:00' }
             ];
         }
     }
