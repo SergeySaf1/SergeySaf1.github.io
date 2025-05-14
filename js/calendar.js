@@ -18,19 +18,23 @@ class BookingCalendar {
         this.renderCalendar();
     }
 
-    async loadBookingsFromGitLab() {
+    async loadBookingsFromYandexTable() {
         try {
-            const response = await fetch('https://api.github.com/repos/SergeySaf1/Sait/contents/New/bookings.json');
+            const YANDEX_OAUTH_TOKEN = 'your_yandex_oauth_token'; // Замените на реальный токен
+            const response = await fetch(
+                'https://cloud-api.yandex.net/v1/disk/resources/download?path=Записи.xlsx',
+                { headers: { "Authorization": `OAuth ${YANDEX_OAUTH_TOKEN}` } }
+            );
             const data = await response.json();
-            const bookings = JSON.parse(atob(data.content));
+            const file = await fetch(data.href);
+            const bookings = await file.json();
             
             this.bookedSlots = bookings.map(item => ({
                 date: item.date,
                 time: item.time
             }));
-            
         } catch (error) {
-            console.log('Используем локальные данные');
+            console.error("Ошибка загрузки данных:", error);
             this.bookedSlots = [
                 { date: '2025-06-15', time: '11:30' },
                 { date: '2025-06-16', time: '15:30' }

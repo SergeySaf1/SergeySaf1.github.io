@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const config = {
         telegram: 'https://t.me/Serg_sss3',
         whatsapp: 'https://wa.me/79259713336',
-        apiEndpoint: 'https://api.github.com/repos/SergeySaf1/Sait/contents/New/bookings.json'
+        YANDEX_OAUTH_TOKEN: 'your_yandex_oauth_token', // Замените на реальный токен
+        yandexTablePath: 'Записи.xlsx',
+        yandexFormId: '6824fddf02848f31aca9a437' // Замените на ID вашей формы
     };
 
     // Обработчики кнопок мессенджеров
@@ -28,15 +30,35 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString()
         };
 
+        // Валидация данных
+        if (!formData.date || !formData.time) {
+            alert('Пожалуйста, выберите дату и время');
+            return;
+        }
+
+        if (!/^\+?\d{10,15}$/.test(formData.phone)) {
+            alert('Введите корректный номер телефона');
+            return;
+        }
+
         try {
-            // 1. Отправляем в GitLab
-            await saveBookingToGitLab(formData);
+            // 1. Проверяем доступность слота
+            if (!await isTimeSlotAvailable(formData.date, formData.time)) {
+                alert('Это время уже занято, пожалуйста, выберите другое');
+                return;
+            }
+
+            // 2. Сохраняем в Яндекс.Таблицу
+            await saveToYandexTable(formData);
             
-            // 2. Отправляем уведомление
+            // 3. Отправляем уведомление
             const message = `✅ Новая запись!\n👤 ${formData.name}\n📞 ${formData.phone}\n📅 ${formData.date} ${formData.time}\n💅 ${formData.service}`;
             window.open(`${config.telegram}?text=${encodeURIComponent(message)}`, '_blank');
             
-            // 3. Обновляем интерфейс
+            // 4. Открываем Яндекс.Форму для подтверждения
+            openYandexForm(formData, config.yandexFormId);
+            
+            // 5. Обновляем интерфейс
             alert(`Запись подтверждена на ${formData.date} в ${formData.time}`);
             window.calendar.bookedSlots.push({ date: formData.date, time: formData.time });
             window.calendar.renderTimeSlots(formData.date);
@@ -46,33 +68,79 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Ошибка при сохранении записи');
         }
     });
-});
 
-// Функция сохранения в GitLab
-async function saveBookingToGitLab(data) {
-    const GITLAB_TOKEN = 'your_github_token'; // Замените на реальный токен
-    const filePath = 'New/bookings.json';
-    
-    // 1. Получаем текущее содержимое файла
-    const response = await fetch(`https://api.github.com/repos/SergeySaf1/Sait/contents/${filePath}`, {
-        headers: { 'Authorization': `token ${GITLAB_TOKEN}` }
-    });
-    
-    const fileData = await response.json();
-    const currentContent = JSON.parse(atob(fileData.content));
-    currentContent.push(data);
-    
-    // 2. Обновляем файл
-    await fetch(`https://api.github.com/repos/SergeySaf1/Sait/contents/${filePath}`, {
-        method: 'PUT',
-        headers: {
-            'Authorization': `token ${GITLAB_TOKEN}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            message: 'Добавлена новая запись',
-            content: btoa(JSON.stringify(currentContent, null, 2)),
-            sha: fileData.sha
-        })
-    });
-}
+    // Проверка доступности времени
+    async function isTimeSlotAvailable(date, time) {
+        try {
+            const bookings = await loadBookingsFromYandexTable();
+            return !bookings.some(booking => 
+                booking.date === date && booking.time === time
+            );
+        } catch (error) {
+            console.error('Ошибка проверки времени:', error);
+            return true; // В случае ошибки разрешаем запись
+        }
+    }
+
+    // Загрузка данных из Яндекс.Таблицы
+    async function loadBookingsFromYandexTable() {
+        try {
+            const response = await fetch(
+                `https://cloud-api.yandex.net/v1/disk/resources/download?path=${encodeURIComponent(config.yandexTablePath)}`,
+                { headers: { "Authorization": `OAuth ${config.YANDEX_OAUTH_TOKEN}` } }
+            );
+            const data = await response.json();
+            const file = await fetch(data.href);
+            const bookings = await file.json();
+            
+            return bookings.map(item => ({
+                date: item.date,
+                time: item.time
+            }));
+        } catch (error) {
+            console.error("Ошибка загрузки данных:", error);
+            return [];
+        }
+    }
+
+    // Сохранение в Яндекс.Таблицу
+    async function saveToYandexTable(data) {
+        try {
+            // 1. Получаем текущие данные
+            const currentData = await loadBookingsFromYandexTable();
+            currentData.push(data);
+            
+            // 2. Обновляем файл
+            const response = await fetch(
+                `https://cloud-api.yandex.net/v1/disk/resources/upload?path=${encodeURIComponent(config.yandexTablePath)}`,
+                {
+                    method: "PUT",
+                    headers: { 
+                        "Authorization": `OAuth ${config.YANDEX_OAUTH_TOKEN}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(currentData)
+                }
+            );
+            
+            if (!response.ok) {
+                throw new Error('Ошибка сохранения данных');
+            }
+        } catch (error) {
+            console.error('Ошибка сохранения:', error);
+            throw error;
+        }
+    }
+
+    // Открытие Яндекс.Формы с автозаполнением
+    function openYandexForm(data, formId) {
+        const params = new URLSearchParams({
+            "field1": data.name,    // Имя
+            "field2": data.phone,    // Телефон
+            "field3": data.date,     // Дата
+            "field4": data.time,     // Время
+            "field5": data.service   // Услуга
+        });
+        window.open(`https://forms.yandex.ru/u/${formId}/?${params}`, "_blank");
+    }
+});
