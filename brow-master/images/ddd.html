@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrowLami | Профессиональное ламинирование</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+        
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #6b46c1;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6b46c1;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: rgba(107, 70, 193, 0.8);
+            color: white;
+            transition: bottom 0.3s ease;
+            padding: 1rem;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            bottom: 0;
+        }
+        
+        .tab-btn.active {
+            background-color: #6b46c1;
+            color: white;
+        }
+        
+        .auth-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .telegram {
+            background-color: #0088cc;
+            color: white;
+        }
+        
+        .whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+        
+        .phone {
+            background-color: #4a5568;
+            color: white;
+        }
+        
+        .footer {
+            background-color: #2d3748;
+            color: white;
+        }
+        
+        /* Calendar styles */
+        .calendar-day.disabled {
+            color: #cbd5e0;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day:not(.disabled):hover {
+            background-color: #ebf4ff;
+        }
+        
+        .calendar-day.selected {
+            background-color: #6b46c1;
+            color: white;
+        }
+        
+        .time-slot {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .time-slot:hover:not(.booked) {
+            background-color: #ebf4ff;
+            border-color: #a3bffa;
+        }
+        
+        .time-slot.booked {
+            background-color: #edf2f7;
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+        
+        .time-slot.selected {
+            background-color: #6b46c1;
+            color: white;
+            border-color: #6b46c1;
+        }
+        
+        .confirmation-modal {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .confirmation-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-list.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Шапка -->
+    <header class="header py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="logo">
+                <i class="fas fa-eye mr-2"></i> BrowLami
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list hidden md:flex space-x-6">
+                    <li><a href="#home" class="nav-link">Главная</a></li>
+                    <li><a href="#services" class="nav-link">Услуги</a></li>
+                    <li><a href="#portfolio" class="nav-link">Работы</a></li>
+                    <li><a href="#about" class="nav-link">Обо мне</a></li>
+                    <li><a href="#booking" class="nav-link">Запись</a></li>
+                    <li><a href="#contacts" class="nav-link">Контакты</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn md:hidden text-2xl" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main>
+        <!-- Герой -->
+        <section class="hero" id="home">
+            <div class="container mx-auto px-4">
+                <div class="hero-content max-w-2xl py-20">
+                    <h1 class="hero-title text-4xl md:text-5xl font-bold mb-4">Идеальные брови за 2 часа</h1>
+                    <p class="hero-text text-xl mb-8">Профессиональное ламинирование с эффектом до 6 недель</p>
+                    <a href="#booking" class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white px-6 py-3 rounded-lg font-medium inline-block">Записаться онлайн</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Услуги -->
+        <section class="services py-16" id="services">
+            <div class="container mx-auto px-4">
+                <h2 class="section-title text-3xl font-bold text-center mb-12">Услуги и цены</h2>
+                
+                <div class="services-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="service-img">
+                            <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Ламинирование бровей" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="service-content p-6">
+                            <h3 class="text-xl font-semibold mb-3">Ламинирование бровей</h3>
+                            <ul class="service-features space-y-2 mb-4">
+                                <li class="flex items-center"><i class="fas fa-clock mr-2 text-purple-700"></i> 1,5 часа</li>
+                                <li class="flex items-center"><i class="fas fa-calendar mr-2 text-purple-700"></i> Эффект 4-6 недель</li>
+                            </ul>
+                            <div class="service-footer flex justify-between items-center">
+                                <span class="price text-xl font-bold text-purple-700">3000 ₽</span>
+                                <button class="btn btn-small bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-lg font-medium">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="service-img">
+                            <img src="https://images.unsplash.com/photo-1596704373707-bf1a9c9a0a0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Ламинирование ресниц" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="service-content p-6">
+                            <h3 class="text-xl font-semibold mb-3">Ламинирование ресниц</h3>
+                            <ul class="service-features space-y-2 mb-4">
+                                <li class="flex items-center"><i class="fas fa-clock mr-2 text-purple-700"></i> 2 часа</li>
+                                <li class="flex items-center"><i class="fas fa-calendar mr-2 text-purple-700"></i> Эффект 6-8 недель</li>
+                            </ul>
+                            <div class="service-footer flex justify-between items-center">
+                                <span class="price text-xl font-bold text-purple-700">3500 ₽</span>
+                                <button class="btn btn-small bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-lg font-medium">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="service-img">
+                            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Комплексная процедура" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="service-content p-6">
+                            <h3 class="text-xl font-semibold mb-3">Комплексная процедура</h3>
+                            <ul class="service-features space-y-2 mb-4">
+                                <li class="flex items-center"><i class="fas fa-clock mr-2 text-purple-700"></i> 3 часа</li>
+                                <li class="flex items-center"><i class="fas fa-calendar mr-2 text-purple-700"></i> Эффект 6-8 недель</li>
+                            </ul>
+                            <div class="service-footer flex justify-between items-center">
+                                <span class="price text-xl font-bold text-purple-700">5500 ₽</span>
+                                <button class="btn btn-small bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-lg font-medium">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Галерея -->
+        <section class="portfolio py-16 bg-gray-100" id="portfolio">
+            <div class="container mx-auto px-4">
+                <h2 class="section-title text-3xl font-bold text-center mb-8">Мои работы</h2>
+                
+                <div class="portfolio-tabs flex justify-center space-x-4 mb-8">
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium active" data-category="all">Все работы</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium" data-category="brows">Брови</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg font-medium" data-category="lashes">Ресницы</button>
+                </div>
+                
+                <div class="portfolio-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="portfolio-item relative rounded-lg overflow-hidden" data-category="brows">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="До и после" class="w-full h-48 object-cover">
+                        <div class="portfolio-overlay">
+                            <p class="font-medium">Ламинирование бровей</p>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item relative rounded-lg overflow-hidden" data-category="brows">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="До и после" class="w-full h-48 object-cover">
+                        <div class="portfolio-overlay">
+                            <p class="font-medium">Коррекция бровей</p>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item relative rounded-lg overflow-hidden" data-category="lashes">
+                        <img src="https://images.unsplash.com/photo-1551594972-220a1c53b5a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="До и после" class="w-full h-48 object-cover">
+                        <div class="portfolio-overlay">
+                            <p class="font-medium">Ламинирование ресниц</p>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item relative rounded-lg overflow-hidden" data-category="lashes">
+                        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="До и после" class="w-full h-48 object-cover">
+                        <div class="portfolio-overlay">
+                            <p class="font-medium">Окрашивание ресниц</p>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item relative rounded-lg overflow-hidden" data-category="brows">
+                        <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="До и после" class="w-full h-48 object-cover">
+                        <div class="portfolio-overlay">
+                            <p class="font-medium">Архитектура бровей</p>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item relative rounded-lg overflow-hidden" data-category="lashes">
+                        <img src="https://images.unsplash.com/photo-1524502397800-2eea0587e263?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="До и после" class="w-full h-48 object-cover">
+                        <div class="portfolio-overlay">
+                            <p class="font-medium">Эффект накладных ресниц</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Обо мне -->
+        <section class="about py-16" id="about">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/3 mb-8 md:mb-0 md:pr-8">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Мастер" class="rounded-full w-64 h-64 object-cover mx-auto shadow-lg">
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold mb-6">Обо мне</h2>
+                        <p class="text-lg mb-4">Привет! Меня зовут Анна, и я профессиональный мастер по ламинированию бровей и ресниц с 5-летним опытом работы.</p>
+                        <p class="text-lg mb-4">Я прошла обучение у лучших мастеров России и Европы, постоянно совершенствую свои навыки на международных мастер-классах.</p>
+                        <p class="text-lg mb-6">В своей работе я использую только профессиональные материалы премиум-класса, которые гарантируют безопасность и долговременный результат.</p>
+                        <div class="flex space-x-4">
+                            <div class="bg-purple-100 p-4 rounded-lg text-center">
+                                <div class="text-3xl font-bold text-purple-700">1000+</div>
+                                <div class="text-gray-600">Довольных клиентов</div>
+                            </div>
+                            <div class="bg-purple-100 p-4 rounded-lg text-center">
+                                <div class="text-3xl font-bold text-purple-700">5</div>
+                                <div class="text-gray-600">Лет опыта</div>
+                            </div>
+                            <div class="bg-purple-100 p-4 rounded-lg text-center">
+                                <div class="text-3xl font-bold text-purple-700">20+</div>
+                                <div class="text-gray-600">Обучений</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Запись -->
+        <section class="booking py-16 bg-purple-50" id="booking">
+            <div class="container mx-auto px-4">
+                <h2 class="section-title text-3xl font-bold text-center mb-12">Онлайн запись</h2>
+                
+                <div class="booking-container bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="lg:w-1/2 p-6">
+                            <div class="calendar-container" id="calendarContainer">
+                                <!-- Календарь будет сгенерирован через JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="lg:w-1/2 p-6 bg-gray-50">
+                            <div class="booking-details mb-6 bg-white p-4 rounded-lg shadow-sm">
+                                <h3 class="font-semibold text-purple-700 mb-2">Ваша бронь</h3>
+                                <div id="selectedService" class="text-gray-500 italic mb-1">Услуга не выбрана</div>
+                                <div id="selectedDateDisplay" class="text-gray-500 italic mb-1">Дата не выбрана</div>
+                                <div id="selectedTimeDisplay" class="text-gray-500 italic">Время не выбрано</div>
+                            </div>
+                            
+                            <div id="timeSlots" class="hidden mb-6">
+                                <h4 class="font-medium text-gray-700 mb-3">Доступное время:</h4>
+                                <div class="grid grid-cols-2 gap-3 mb-6" id="timeSlotsGrid"></div>
+                            </div>
+                            
+                            <form id="bookingForm" class="space-y-4">
+                                <div class="form-group">
+                                    <label for="name" class="block text-gray-700 mb-1">Ваше имя</label>
+                                    <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone" class="block text-gray-700 mb-1">Телефон</label>
+                                    <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" required>
+                                </div>
+                                
+                                <div class="auth-methods grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                                    <button type="button" class="auth-btn telegram px-4 py-2 rounded-lg font-medium flex items-center justify-center">
+                                        <i class="fab fa-telegram mr-2"></i> Telegram
+                                    </button>
+                                    <button type="button" class="auth-btn whatsapp px-4 py-2 rounded-lg font-medium flex items-center justify-center">
+                                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                                    </button>
+                                    <button type="button" class="auth-btn phone px-4 py-2 rounded-lg font-medium flex items-center justify-center">
+                                        <i class="fas fa-phone mr-2"></i> По телефону
+                                    </button>
+                                </div>
+                                
+                                <button type="submit" id="confirmBooking" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all" disabled>
+                                    Подтвердить запись
+                                </button>
+                            </form>
+                            
+                            <div id="noDateSelected" class="text-center py-8 text-gray-400">
+                                <i class="fas fa-calendar-alt text-4xl mb-3"></i>
+                                <p>Пожалуйста, выберите дату для просмотра доступного времени</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer py-12" id="contacts">
+        <div class="container mx-auto px-4">
+            <div class="footer-content grid md:grid-cols-3 gap-8">
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">BrowLami</h3>
+                    <p class="mb-4">Профессиональное ламинирование бровей и ресниц в Москве</p>
+                    <div class="social-links flex space-x-4">
+                        <a href="#" class="text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="text-2xl"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Контакты</h3>
+                    <p class="flex items-center mb-2"><i class="fas fa-map-marker-alt mr-2"></i> г. Москва, ул. Красивая, 15</p>
+                    <p class="flex items-center mb-2"><i class="fas fa-phone mr-2"></i> +7 (999) 123-45-67</p>
+                    <p class="flex items-center"><i class="fas fa-envelope mr-2"></i> info@browlami.ru</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Часы работы</h3>
+                    <p class="mb-2">Пн-Пт: 9:30 - 19:00</p>
+                    <p class="mb-2">Сб: 10:00 - 16:00</p>
+                    <p>Вс: выходной</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 BrowLami. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 confirmation-modal">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-xl transform transition-all">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-500 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Бронь подтверждена!</h3>
+                <p id="confirmationText" class="text-gray-600"></p>
+            </div>
+            <button id="closeModal" class="w-full py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-medium">
+                Закрыть
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-list').classList.toggle('active');
+        });
+
+        // Portfolio tabs
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const category = button.dataset.category;
+                
+                // Filter portfolio items
+                portfolioItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Service buttons - connect to booking
+        document.querySelectorAll('.btn-small').forEach(button => {
+            button.addEventListener('click', function() {
+                const serviceCard = this.closest('.service-card');
+                const serviceName = serviceCard.querySelector('h3').textContent;
+                const servicePrice = serviceCard.querySelector('.price').textContent;
+                
+                document.getElementById('selectedService').innerHTML = `
+                    <span class="font-medium">Услуга:</span> ${serviceName} (${servicePrice})
+                `;
+                
+                // Scroll to booking section
+                document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Booking Calendar
+        class BookingCalendar {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.currentDate = new Date();
+                this.selectedDate = null;
+                this.selectedTime = null;
+                this.selectedService = null;
+                this.workHours = ['09:30', '11:30', '13:30', '15:30', '17:30'];
+                this.bookedSlots = [];
+                
+                this.init();
+            }
+
+            init() {
+                this.fetchBookedSlots().then(() => {
+                    this.renderCalendar();
+                    this.setupEventListeners();
+                });
+            }
+
+            async fetchBookedSlots() {
+                // Mock data (booked slots)
+                this.bookedSlots = [
+                    { date: this.formatDate(new Date().setDate(new Date().getDate() + 2)), time: '11:30' },
+                    { date: this.formatDate(new Date().setDate(new Date().getDate() + 3)), time: '15:30' },
+                    { date: this.formatDate(new Date().setDate(new Date().getDate() + 1)), time: '09:30' },
+                    { date: this.formatDate(new Date().setDate(new Date().getDate() + 5)), time: '13:30' },
+                    { date: this.formatDate(new Date().setDate(new Date().getDate() + 7)), time: '17:30' }
+                ];
+            }
+
+            renderCalendar() {
+                const year = this.currentDate.getFullYear();
+                const month = this.currentDate.getMonth();
+                const today = new Date();
+
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+
+                let calendarHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <button id="prevMonth" class="p-2 rounded-full hover:bg-gray-100">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 class="text-xl font-semibold text-gray-800">${this.getMonthName(month)} ${year}</h3>
+                        <button id="nextMonth" class="p-2 rounded-full hover:bg-gray-100">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 mb-2">
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Пн</div>
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Вт</div>
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Ср</div>
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Чт</div>
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Пт</div>
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Сб</div>
+                        <div class="text-center font-medium text-gray-500 text-sm py-1">Вс</div>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                `;
+
+                // Empty cells for previous month days
+                for (let i = 0; i < startDay; i++) {
+                    calendarHTML += `<div class="calendar-day disabled aspect-square flex items-center justify-center"></div>`;
+                }
+
+                // Current month days
+                for (let day = 1; day <= lastDay.getDate(); day++) {
+                    const date = new Date(year, month, day);
+                    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+                    const isPast = date < today && date.getDate() !== today.getDate();
+                    const isToday = date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+                    const dateStr = this.formatDate(date);
+
+                    calendarHTML += `
+                        <div class="calendar-day ${isWeekend || isPast ? 'disabled' : ''} ${isToday ? 'border-2 border-purple-500' : ''}
+                            aspect-square flex items-center justify-center rounded-lg cursor-pointer transition-all relative"
+                            data-date="${dateStr}">
+                            ${day}
+                            ${isToday ? '<div class="absolute bottom-1 w-1 h-1 bg-purple-500 rounded-full"></div>' : ''}
+                        </div>
+                    `;
+                }
+
+                calendarHTML += `</div>`;
+                this.container.innerHTML = calendarHTML;
+                
+                // Update UI based on selection
+                if (this.selectedDate) {
+                    const selectedDay = this.container.querySelector(`.calendar-day[data-date="${this.selectedDate}"]`);
+                    if (selectedDay) {
+                        selectedDay.classList.add('selected');
+                        this.renderTimeSlots(this.selectedDate);
+                    } else {
+                        this.selectedDate = null;
+                        this.selectedTime = null;
+                        this.updateBookingDetails();
+                    }
+                }
+            }
+
+            renderTimeSlots(date) {
+                const timeSlotsContainer = document.getElementById('timeSlots');
+                const slotsGrid = document.getElementById('timeSlotsGrid');
+                slotsGrid.innerHTML = '';
+                
+                document.getElementById('noDateSelected').classList.add('hidden');
+                timeSlotsContainer.classList.remove('hidden');
+                
+                // Update selected date display
+                const dateDisplay = document.getElementById('selectedDateDisplay');
+                const dateObj = new Date(date);
+                dateDisplay.innerHTML = `
+                    <span class="font-medium">Дата:</span> 
+                    ${dateObj.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric', month: 'long' })}
+                `;
+                
+                document.getElementById('selectedTimeDisplay').textContent = 'Время не выбрано';
+
+                this.workHours.forEach(time => {
+                    const isBooked = this.bookedSlots.some(
+                        slot => slot.date === date && slot.time === time
+                    );
+
+                    const timeSlot = document.createElement('div');
+                    timeSlot.className = `time-slot px-4 py-2 border rounded-lg text-center transition-all ${isBooked ? 'booked' : ''} ${this.selectedTime === time ? 'selected' : ''}`;
+                    timeSlot.textContent = time;
+                    timeSlot.dataset.time = time;
+
+                    if (!isBooked) {
+                        timeSlot.addEventListener('click', (e) => this.selectTimeSlot(e, time));
+                    }
+
+                    slotsGrid.appendChild(timeSlot);
+                });
+                
+                // Update confirm button state
+                document.getElementById('confirmBooking').disabled = !this.selectedTime || !this.selectedService;
+            }
+
+            selectTimeSlot(event, time) {
+                document.querySelectorAll('.time-slot').forEach(slot => {
+                    slot.classList.remove('selected');
+                });
+
+                event.target.classList.add('selected');
+                this.selectedTime = time;
+                
+                // Update selected time display
+                document.getElementById('selectedTimeDisplay').innerHTML = `
+                    <span class="font-medium">Время:</span> ${time}
+                `;
+                
+                // Enable confirm button if service is selected
+                document.getElementById('confirmBooking').disabled = !this.selectedService;
+            }
+
+            setupEventListeners() {
+                document.getElementById('prevMonth').addEventListener('click', () => {
+                    this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+                    this.renderCalendar();
+                });
+
+                document.getElementById('nextMonth').addEventListener('click', () => {
+                    this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+                    this.renderCalendar();
+                });
+
+                this.container.addEventListener('click', (e) => {
+                    const dayElement = e.target.closest('.calendar-day:not(.disabled)');
+                    if (dayElement) {
+                        document.querySelectorAll('.calendar-day').forEach(d => {
+                            d.classList.remove('selected');
+                        });
+
+                        dayElement.classList.add('selected');
+                        this.selectedDate = dayElement.dataset.date;
+                        this.selectedTime = null;
+                        this.renderTimeSlots(this.selectedDate);
+                    }
+                });
+                
+                document.getElementById('bookingForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.showConfirmation();
+                });
+                
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    document.getElementById('confirmationModal').classList.remove('active');
+                });
+                
+                // Auth buttons
+                document.querySelectorAll('.auth-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const service = button.classList.contains('telegram') ? 'Telegram' : 
+                                        button.classList.contains('whatsapp') ? 'WhatsApp' : 'телефону';
+                        alert(`Вы выбрали авторизацию через ${service}. В реальном приложении здесь была бы реализована соответствующая функциональность.`);
+                    });
+                });
+            }
+            
+            showConfirmation() {
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const dateObj = new Date(this.selectedDate);
+                const confirmationText = document.getElementById('confirmationText');
+                
+                confirmationText.innerHTML = `
+                    ${name}, ваша встреча запланирована на<br>
+                    <strong>${dateObj.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' })}</strong><br>
+                    в <strong>${this.selectedTime}</strong><br><br>
+                    Мы свяжемся с вами по номеру <strong>${phone}</strong> для подтверждения.
+                `;
+                
+                document.getElementById('confirmationModal').classList.add('active');
+                
+                // Add to booked slots (in a real app, this would be an API call)
+                this.bookedSlots.push({
+                    date: this.selectedDate,
+                    time: this.selectedTime
+                });
+                
+                // Reset form
+                document.getElementById('bookingForm').reset();
+                
+                // Reset selection
+                this.selectedTime = null;
+                this.renderTimeSlots(this.selectedDate);
+            }
+
+            getMonthName(monthIndex) {
+                const months = [
+                    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+                ];
+                return months[monthIndex];
+            }
+            
+            formatDate(date) {
+                const d = new Date(date);
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            }
+            
+            updateBookingDetails() {
+                if (!this.selectedDate) {
+                    document.getElementById('noDateSelected').classList.remove('hidden');
+                    document.getElementById('timeSlots').classList.add('hidden');
+                }
+            }
+        }
+
+        // Initialize calendar
+        document.addEventListener('DOMContentLoaded', () => {
+            new BookingCalendar('calendarContainer');
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ 
+                            behavior: 'smooth' 
+                        });
+                        
+                        // Close mobile menu if open
+                        document.querySelector('.nav-list').classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
