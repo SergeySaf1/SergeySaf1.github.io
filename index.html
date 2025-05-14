@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrowLami | Профессиональное ламинирование</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-eye"></i> BrowLami
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">Главная</a></li>
+                    <li><a href="#services" class="nav-link">Услуги</a></li>
+                    <li><a href="#portfolio" class="nav-link">Работы</a></li>
+                    <li><a href="#about" class="nav-link">Обо мне</a></li>
+                    <li><a href="#booking" class="nav-link">Запись</a></li>
+                    <li><a href="#contacts" class="nav-link">Контакты</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main>
+        <!-- Герой -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Идеальные брови за 2 часа</h1>
+                    <p class="hero-text">Профессиональное ламинирование с эффектом до 6 недель</p>
+                    <a href="#booking" class="btn btn-primary">Записаться онлайн</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Услуги -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">Услуги и цены</h2>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/service-brows.jpg" alt="Ламинирование бровей">
+                        </div>
+                        <div class="service-content">
+                            <h3>Ламинирование бровей</h3>
+                            <ul class="service-features">
+                                <li><i class="fas fa-clock"></i> 1,5 часа</li>
+                                <li><i class="fas fa-calendar"></i> Эффект 4-6 недель</li>
+                            </ul>
+                            <div class="service-footer">
+                                <span class="price">3000 ₽</span>
+                                <button class="btn btn-small">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Другие услуги -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Галерея -->
+        <section class="portfolio" id="portfolio">
+            <div class="container">
+                <h2 class="section-title">Мои работы</h2>
+                
+                <div class="portfolio-tabs">
+                    <button class="tab-btn active" data-category="all">Все работы</button>
+                    <button class="tab-btn" data-category="brows">Брови</button>
+                    <button class="tab-btn" data-category="lashes">Ресницы</button>
+                </div>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-item" data-category="brows">
+                        <img src="images/brows/before-after-1.jpg" alt="До и после">
+                        <div class="portfolio-overlay">
+                            <p>Ламинирование бровей</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Другие работы -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Запись -->
+        <section class="booking" id="booking">
+            <div class="container">
+                <h2 class="section-title">Онлайн запись</h2>
+                
+                <div class="booking-container">
+                    <div class="calendar-container" id="calendarContainer">
+                        <!-- Календарь будет сгенерирован через JS -->
+                    </div>
+                    
+                    <div class="booking-form">
+                        <form id="bookingForm">
+                            <div class="form-group">
+                                <label for="name">Ваше имя</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Телефон</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                            
+                            <div class="auth-methods">
+                                <button type="button" class="auth-btn telegram">
+                                    <i class="fab fa-telegram"></i> Telegram
+                                </button>
+                                <button type="button" class="auth-btn whatsapp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </button>
+                                <button type="button" class="auth-btn phone">
+                                    <i class="fas fa-phone"></i> По телефону
+                                </button>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Подтвердить запись</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer" id="contacts">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Красивая, 15</p>
+                    <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Часы работы</h3>
+                    <p>Пн-Пт: 9:30 - 19:00</p>
+                    <p>Сб: 10:00 - 16:00</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение JavaScript -->
+    <script src="js/calendar.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script> 
+</body>
+</html>
