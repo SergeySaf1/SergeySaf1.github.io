@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Мобильное меню
+    // Mobile menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navList = document.querySelector('.nav-list');
     
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             : '<i class="fas fa-bars"></i>';
     });
 
-    // Плавная прокрутка
+    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
                 
-                // Закрываем меню на мобильных
+                // Close mobile menu
                 if (navList.classList.contains('active')) {
                     navList.classList.remove('active');
                     mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
@@ -34,17 +34,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Инициализация галереи
+    // Portfolio gallery
     const portfolioItems = [
-        { img: 'images/brows/before-after-1.jpg', category: 'brows' },
-        { img: 'images/lashes/before-after-1.jpg', category: 'lashes' },
-        // Добавьте другие работы
+        { img: 'images/lamination/12345.jpg', category: 'lamination' },
+        { img: 'images/correction/before-after-1.jpg', category: 'correction' },
+        { img: 'images/shaping/1234.jpg', category: 'shaping' },
+        { img: 'images/coloring/123.jpg', category: 'coloring' }
     ];
 
     const portfolioGrid = document.querySelector('.portfolio-grid');
     const tabButtons = document.querySelectorAll('.tab-btn');
 
-    function renderPortfolio(category = 'brows') {
+    function renderPortfolio(category = 'lamination') {
         portfolioGrid.innerHTML = '';
         
         portfolioItems.forEach(item => {
@@ -53,9 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 portfolioItem.className = 'portfolio-item';
                 portfolioItem.dataset.category = item.category;
                 portfolioItem.innerHTML = `
-                    <img src="${item.img}" alt="Работа мастера">
+                    <img src="${item.img}" alt="Пример работы">
                     <div class="portfolio-overlay">
-                        <p>${item.category === 'brows' ? 'Брови' : 'Ресницы'}</p>
+                        <p>${getCategoryName(item.category)}</p>
                     </div>
                 `;
                 portfolioGrid.appendChild(portfolioItem);
@@ -63,7 +64,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Фильтрация работ
+    function getCategoryName(category) {
+        const names = {
+            'lamination': 'Ламинирование',
+            'correction': 'Коррекция',
+            'shaping': 'Придание формы',
+            'coloring': 'Окрашивание'
+        };
+        return names[category] || category;
+    }
+
+    // Filter portfolio
     tabButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             tabButtons.forEach(b => b.classList.remove('active'));
@@ -72,6 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Инициализация - показываем только брови по умолчанию
-    renderPortfolio('brows');
+    // Initialize with lamination
+    renderPortfolio('lamination');
 });
