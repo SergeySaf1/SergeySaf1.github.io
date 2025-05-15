@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrowLami | Профессиональное ламинирование</title>
+    <title>LashesBrows | Профессиональное ламинирование бровей и ресниц</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -13,7 +13,7 @@
     <header class="header">
         <div class="container">
             <a href="#" class="logo">
-                <i class="fas fa-eye"></i> BrowLami
+                <i class="fas fa-eye"></i> LashesBrows
             </a>
             
             <nav class="nav">
@@ -39,8 +39,9 @@
         <section class="hero" id="home">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="hero-title">Идеальные брови за 2 часа</h1>
-                    <p class="hero-text">Профессиональное ламинирование с эффектом до 6 недель</p>
+                    <h1 class="hero-title">Татьяна Сафронова</h1>
+                    <p class="hero-subtitle">Идеальные брови и ресницы за 2 часа</p>
+                    <p class="hero-text">Профессиональный бровист с 5-летним опытом. Создаю идеальную форму бровей и ресниц, подчеркивающую вашу естественную красоту.</p>
                     <a href="#booking" class="btn btn-primary">Записаться онлайн</a>
                 </div>
             </div>
@@ -49,35 +50,62 @@
         <!-- Услуги -->
         <section class="services" id="services">
             <div class="container">
-                <h2 class="section-title">Услуги и цены</h2>
+                <h2 class="section-title">Наши услуги</h2>
                 
                 <div class="services-grid">
+                    <!-- Ламинирование -->
                     <div class="service-card">
-                        <div class="service-img">
-                            <img src="images/service-brows.jpg" alt="Ламинирование бровей">
-                        </div>
                         <div class="service-content">
-                            <h3>Ламинирование бровей</h3>
-                            <ul class="service-features">
-                                <li><i class="fas fa-clock"></i> 1,5 часа</li>
-                                <li><i class="fas fa-calendar"></i> Эффект 4-6 недель</li>
-                            </ul>
+                            <h3>Ламинирование бровей и ресниц</h3>
+                            <p class="service-description">Процедура, которая придает бровям идеальную форму, делает их послушными и ухоженными на 4-6 недель.</p>
                             <div class="service-footer">
-                                <span class="price">3000 ₽</span>
-                                <button class="btn btn-small">Записаться</button>
+                                <span class="price">2500 ₽</span>
+                                <a href="#booking" class="btn btn-small">Записаться</a>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Другие услуги -->
+                    <!-- Коррекция -->
+                    <div class="service-card">
+                        <div class="service-content">
+                            <h3>Коррекция бровей и ресниц</h3>
+                            <p class="service-description">Точная форма и аккуратные линии, подчеркивающие ваш взгляд и гармонирующие с чертами лица.</p>
+                            <div class="service-footer">
+                                <span class="price">1000 ₽</span>
+                                <a href="#booking" class="btn btn-small">Записаться</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Придание формы -->
+                    <div class="service-card">
+                        <div class="service-content">
+                            <h3>Придание формы</h3>
+                            <p class="service-description">Создание идеального изгиба бровей с учетом анатомии лица и ваших пожеланий.</p>
+                            <div class="service-footer">
+                                <span class="price">1500 ₽</span>
+                                <a href="#booking" class="btn btn-small">Записаться</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Окрашивание -->
+                    <div class="service-card">
+                        <div class="service-content">
+                            <h3>Окрашивание бровей и ресниц</h3>
+                            <p class="service-description">Насыщенный цвет и выразительность на 3-4 недели. Использую только качественные краски.</p>
+                            <div class="service-footer">
+                                <span class="price">1500 ₽</span>
+                                <a href="#booking" class="btn btn-small">Записаться</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Галерея -->
-        <section class="portfolio" id="portfolio">
-            <div class="container">
-                <h2 class="section-title">Мои работы</h2>
+        
                 
                 <div class="portfolio-tabs">
                     <button class="tab-btn active" data-category="brows">Брови</button>
@@ -92,7 +120,36 @@
                         </div>
                     </div>
                     
-                    <!-- Другие работы -->
+                    <div class="portfolio-item" data-category="brows">
+                        <img src="images/brows/before-after-2.jpg" alt="До и после">
+                        <div class="portfolio-overlay">
+                            <p>Коррекция и окрашивание</p>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item" data-category="lashes">
+                        <img src="images/lashes/before-after-1.jpg" alt="До и после">
+                        <div class="portfolio-overlay">
+                            <p>Ламинирование ресниц</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Обо мне -->
+        <section class="about" id="about">
+            <div class="container">
+                <h2 class="section-title">Обо мне</h2>
+                <div class="about-content">
+                    <div class="about-img">
+                        <img src="images/master-photo.jpg" alt="Татьяна Сафронова">
+                    </div>
+                    <div class="about-text">
+                        <p>Привет! Меня зовут Татьяна, я профессиональный бровист и мастер по ламинированию ресниц с 5-летним опытом работы.</p>
+                        <p>Я постоянно совершенствую свои навыки на международных курсах и мастер-классах, чтобы предлагать вам самые современные и безопасные техники.</p>
+                        <p>В своей работе использую только профессиональные материалы премиум-класса, которые обеспечивают стойкий результат без вреда для ваших бровей и ресниц.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -155,14 +212,29 @@
                 <div class="footer-col">
                     <h3>Контакты</h3>
                     <p><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Красивая, 15</p>
-                    <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    <p><i class="fas fa-phone"></i> +7 (925) 971-33-36</p>
+                    <p><i class="fas fa-envelope"></i> info@lashesbrows.ru</p>
                 </div>
                 
                 <div class="footer-col">
                     <h3>Часы работы</h3>
                     <p>Пн-Пт: 9:30 - 19:00</p>
                     <p>Сб: 10:00 - 16:00</p>
+                    <p>Вс: выходной</p>
                 </div>
+                
+                <div class="footer-col">
+                    <h3>Социальные сети</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 LashesBrows. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -170,6 +242,6 @@
     <!-- Подключение JavaScript -->
     <script src="js/calendar.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/main.js"></script> 
+    <script src="js/main.js"></script>
 </body>
 </html>
