@@ -85,4 +85,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize with lamination
     renderPortfolio('lamination');
+
+    // Auto-scrolling photo folders
+    const folders = document.querySelectorAll('.service-folder');
+    
+    folders.forEach(folder => {
+        const gallery = folder.querySelector('.service-gallery');
+        const items = gallery.querySelectorAll('.gallery-item');
+        let currentIndex = 0;
+        let intervalId = null;
+        
+        if (items.length > 1) {
+            folder.addEventListener('mouseenter', () => {
+                intervalId = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % items.length;
+                    gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
+                }, 3000);
+            });
+            
+            folder.addEventListener('mouseleave', () => {
+                clearInterval(intervalId);
+            });
+        }
+    });
+
+    // Folder buttons functionality
+    document.querySelectorAll('.folder-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Предотвращаем переворот папки при клике на кнопку
+            
+            // Устанавливаем выбранную услугу в форме бронирования
+            const serviceFolder = this.closest('.service-folder');
+            if (serviceFolder) {
+                const serviceName = serviceFolder.dataset.service;
+                const serviceSelect = document.getElementById('service');
+                
+                if (serviceSelect) {
+                    serviceSelect.value = serviceName;
+                    
+                    // Прокручиваем к форме бронирования
+                    const bookingSection = document.getElementById('booking');
+                    if (bookingSection) {
+                        window.scrollTo({
+                            top: bookingSection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
+        });
+    });
 });

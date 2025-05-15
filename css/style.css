@@ -333,14 +333,14 @@ section {
 
 .portfolio-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.15);
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
 }
 
 .portfolio-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s;
+    transition: transform 0.5s ease;
 }
 
 .portfolio-item:hover img {
@@ -372,6 +372,7 @@ section {
 }
 
 .about-img {
+    height: 500px;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: var(--shadow);
@@ -379,13 +380,14 @@ section {
 
 .about-img img {
     width: 100%;
-    height: auto;
-    display: block;
-    transition: var(--transition);
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
 }
 
 .about-img:hover img {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .about-text {
@@ -660,6 +662,118 @@ section {
     animation: fadeIn 0.8s ease forwards;
 }
 
+/* Стили для папок услуг */
+.service-folders {
+    padding: 80px 0;
+    background: #f9f9f9;
+}
+
+.folders-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.service-folder {
+    position: relative;
+    height: 350px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.folder-front, .folder-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.6s ease;
+}
+
+.folder-front {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+.folder-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    z-index: 1;
+}
+
+.folder-front h3 {
+    position: relative;
+    z-index: 2;
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.price-tag {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.folder-back {
+    transform: rotateY(180deg);
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-gallery {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    padding: 5px;
+}
+
+.gallery-item {
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.service-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.service-info p {
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+/* Анимация переворота */
+.service-folder:hover .folder-front {
+    transform: rotateY(-180deg);
+}
+
+.service-folder:hover .folder-back {
+    transform: rotateY(0deg);
+}
+
 /* Адаптивность */
 @media (max-width: 992px) {
     .booking-container,
@@ -713,6 +827,14 @@ section {
     .social-buttons {
         flex-direction: column;
     }
+    
+    .service-folder {
+        height: 300px;
+    }
+    
+    .folder-front h3 {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -736,63 +858,4 @@ section {
     .portfolio-grid {
         grid-template-columns: 1fr;
     }
-}
-.about-img {
-    height: 500px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.about-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    transition: transform 0.5s ease;
-}
-
-.about-img:hover img {
-    transform: scale(1.03);
-}
-
-.portfolio-item {
-    position: relative;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.portfolio-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.portfolio-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
-}
-
-.portfolio-item:hover img {
-    transform: scale(1.05);
-}
-
-.portfolio-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-    color: white;
-    padding: 20px;
-    transform: translateY(100%);
-    transition: all 0.3s ease;
-}
-
-.portfolio-item:hover .portfolio-overlay {
-    transform: translateY(0);
 }

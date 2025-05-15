@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- Шапка -->
     <header class="header">
         <div class="container">
             <a href="#" class="logo">
                 <i class="fas fa-eye"></i> LashesBrows
             </a>
-            
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link">Главная</a></li>
@@ -25,7 +24,6 @@
                     <li><a href="#booking" class="nav-link">Запись</a></li>
                     <li><a href="#contacts" class="nav-link">Контакты</a></li>
                 </ul>
-                
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -34,67 +32,98 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero" id="home">
+        <!-- Герой с фото мастера -->
+        <section class="hero" id="home" style="background-image: url('images/hero-bg.jpg')">
             <div class="container">
                 <div class="hero-content">
                     <h1 class="hero-title">Татьяна Сафронова</h1>
                     <p class="hero-subtitle">Идеальные брови и ресницы за 2 часа</p>
                     <p class="hero-text">Профессиональный бровист с 5-летним опытом. Создаю идеальную форму бровей и ресниц, подчеркивающую вашу естественную красоту.</p>
-                    <a href="#booking" class="btn btn-primary">Записаться онлайн</a>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn btn-primary">Наши услуги</a>
+                        <a href="#booking" class="btn btn-secondary">Записаться онлайн</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section class="services" id="services">
+        <!-- Услуги-папки -->
+        <section class="service-folders" id="services">
             <div class="container">
                 <h2 class="section-title">Наши услуги</h2>
                 
-                <div class="services-grid">
-                    <!-- Lamination -->
-                    <div class="service-card">
-                        <div class="service-content">
-                            <h3>Ламинирование бровей и ресниц</h3>
-                            <p class="service-description">Процедура, которая придает бровям идеальную форму, делает их послушными и ухоженными на 4-6 недель.</p>
-                            <div class="service-footer">
-                                <span class="price">2500 ₽</span>
+                <div class="folders-container">
+                    <!-- Папка Ламинирование -->
+                    <div class="service-folder" data-service="lamination">
+                        <div class="folder-front" style="background-image: url('images/lamination/12345.jpg')">
+                            <h3>Ламинирование</h3>
+                            <div class="price-tag">2500 ₽</div>
+                            <a href="#booking" class="btn btn-small folder-btn">Записаться</a>
+                        </div>
+                        <div class="folder-back">
+                            <div class="service-gallery">
+                                <div class="gallery-item" style="background-image: url('images/lamination/12345.jpg')"></div>
+                                <div class="gallery-item" style="background-image: url('images/lamination/photo2.jpg')"></div>
+                            </div>
+                            <div class="service-info">
+                                <p>Процедура, которая придает бровям идеальную форму на 4-6 недель</p>
                                 <a href="#booking" class="btn btn-small">Записаться</a>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Correction -->
-                    <div class="service-card">
-                        <div class="service-content">
-                            <h3>Коррекция бровей и ресниц</h3>
-                            <p class="service-description">Точная форма и аккуратные линии, подчеркивающие ваш взгляд и гармонирующие с чертами лица.</p>
-                            <div class="service-footer">
-                                <span class="price">1000 ₽</span>
+                    <!-- Папка Коррекция -->
+                    <div class="service-folder" data-service="correction">
+                        <div class="folder-front" style="background-image: url('images/correction/before-after-1.jpg')">
+                            <h3>Коррекция</h3>
+                            <div class="price-tag">1000 ₽</div>
+                            <a href="#booking" class="btn btn-small folder-btn">Записаться</a>
+                        </div>
+                        <div class="folder-back">
+                            <div class="service-gallery">
+                                <div class="gallery-item" style="background-image: url('images/correction/before-after-1.jpg')"></div>
+                                <div class="gallery-item" style="background-image: url('images/correction/photo2.jpg')"></div>
+                            </div>
+                            <div class="service-info">
+                                <p>Точная форма и аккуратные линии, подчеркивающие ваш взгляд</p>
                                 <a href="#booking" class="btn btn-small">Записаться</a>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Shaping -->
-                    <div class="service-card">
-                        <div class="service-content">
+                    <!-- Папка Окрашивание -->
+                    <div class="service-folder" data-service="coloring">
+                        <div class="folder-front" style="background-image: url('images/coloring/123.jpg')">
+                            <h3>Окрашивание</h3>
+                            <div class="price-tag">1500 ₽</div>
+                            <a href="#booking" class="btn btn-small folder-btn">Записаться</a>
+                        </div>
+                        <div class="folder-back">
+                            <div class="service-gallery">
+                                <div class="gallery-item" style="background-image: url('images/coloring/123.jpg')"></div>
+                                <div class="gallery-item" style="background-image: url('images/coloring/photo2.jpg')"></div>
+                            </div>
+                            <div class="service-info">
+                                <p>Насыщенный цвет и выразительность на 3-4 недели</p>
+                                <a href="#booking" class="btn btn-small">Записаться</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Папка Придание формы -->
+                    <div class="service-folder" data-service="shaping">
+                        <div class="folder-front" style="background-image: url('images/shaping/1234.jpg')">
                             <h3>Придание формы</h3>
-                            <p class="service-description">Создание идеального изгиба бровей с учетом анатомии лица и ваших пожеланий.</p>
-                            <div class="service-footer">
-                                <span class="price">1500 ₽</span>
-                                <a href="#booking" class="btn btn-small">Записаться</a>
-                            </div>
+                            <div class="price-tag">1500 ₽</div>
+                            <a href="#booking" class="btn btn-small folder-btn">Записаться</a>
                         </div>
-                    </div>
-                    
-                    <!-- Coloring -->
-                    <div class="service-card">
-                        <div class="service-content">
-                            <h3>Окрашивание бровей и ресниц</h3>
-                            <p class="service-description">Насыщенный цвет и выразительность на 3-4 недели. Использую только качественные краски.</p>
-                            <div class="service-footer">
-                                <span class="price">1500 ₽</span>
+                        <div class="folder-back">
+                            <div class="service-gallery">
+                                <div class="gallery-item" style="background-image: url('images/shaping/1234.jpg')"></div>
+                                <div class="gallery-item" style="background-image: url('images/shaping/photo2.jpg')"></div>
+                            </div>
+                            <div class="service-info">
+                                <p>Создание идеального изгиба с учетом анатомии лица</p>
                                 <a href="#booking" class="btn btn-small">Записаться</a>
                             </div>
                         </div>
@@ -103,25 +132,40 @@
             </div>
         </section>
 
-        <!-- Portfolio Section -->
+        <!-- Портфолио -->
         <section class="portfolio" id="portfolio">
             <div class="container">
                 <h2 class="section-title">Наши работы</h2>
-                
-                <div class="portfolio-tabs">
-                    <button class="tab-btn active" data-category="lamination">Ламинирование</button>
-                    <button class="tab-btn" data-category="correction">Коррекция</button>
-                    <button class="tab-btn" data-category="shaping">Придание формы</button>
-                    <button class="tab-btn" data-category="coloring">Окрашивание</button>
-                </div>
-                
                 <div class="portfolio-grid">
-                    <!-- Items will be loaded via JS -->
+                    <div class="portfolio-item">
+                        <img src="images/lamination/12345.jpg" alt="Результат ламинирования">
+                        <div class="portfolio-overlay">
+                            <h3>Ламинирование</h3>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="images/correction/before-after-1.jpg" alt="До и после коррекции">
+                        <div class="portfolio-overlay">
+                            <h3>Коррекция</h3>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="images/coloring/123.jpg" alt="Результат окрашивания">
+                        <div class="portfolio-overlay">
+                            <h3>Окрашивание</h3>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="images/shaping/1234.jpg" alt="Придание формы">
+                        <div class="portfolio-overlay">
+                            <h3>Придание формы</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
+        <!-- Обо мне -->
         <section class="about" id="about">
             <div class="container">
                 <h2 class="section-title">Обо мне</h2>
@@ -138,14 +182,14 @@
             </div>
         </section>
 
-        <!-- Booking Section -->
+        <!-- Запись -->
         <section class="booking" id="booking">
             <div class="container">
                 <h2 class="section-title">Онлайн запись</h2>
                 
                 <div class="booking-container">
                     <div class="calendar-container" id="calendarContainer">
-                        <!-- Calendar will be loaded via JS -->
+                        <!-- Календарь будет загружен через JS -->
                     </div>
                     
                     <div class="booking-form">
@@ -188,7 +232,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Подвал -->
     <footer class="footer" id="contacts">
         <div class="container">
             <div class="footer-content">
@@ -222,7 +266,7 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Скрипты -->
     <script src="js/calendar.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
