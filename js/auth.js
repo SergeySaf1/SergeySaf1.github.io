@@ -6,59 +6,58 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Обработчики кнопок мессенджеров
-    document.querySelectorAll('.auth-btn.telegram').forEach(btn => {
-        btn.addEventListener('click', () => {
-            window.open(`${config.telegram}?text=Хочу записаться на ламинирование бровей`);
+    document.querySelectorAll('.social-btn.telegram').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open(`${config.telegram}?text=Хочу записаться на ламинирование бровей`, '_blank');
         });
     });
 
-    document.querySelectorAll('.auth-btn.whatsapp').forEach(btn => {
-        btn.addEventListener('click', () => {
-            window.open(`${config.whatsapp}?text=Хочу записаться на ламинирование бровей`);
+    document.querySelectorAll('.social-btn.whatsapp').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open(`${config.whatsapp}?text=Хочу записаться на ламинирование бровей`, '_blank');
         });
     });
 
     // Обработка формы
-    document.getElementById('bookingForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        // Собираем данные с сайта
-        const formData = {
-            name: document.getElementById('name').value,
-            // Фамилия не запрашивается на сайте - оставляем пустой или просим ввести
-            lastName: '', 
-            phone: document.getElementById('phone').value,
-            date: window.calendar?.selectedDate || '',
-            time: window.calendar?.selectedTime || '',
-            // Услуга по умолчанию - можно добавить выбор на сайте
-            service: 'ламинирование' 
-        };
+            const formData = {
+                name: document.getElementById('name').value,
+                lastName: '',
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                date: window.calendar?.selectedDate || '',
+                time: window.calendar?.selectedTime || ''
+            };
 
-        // Валидация
-        if (!formData.date || !formData.time) {
-            alert('Пожалуйста, выберите дату и время');
-            return;
-        }
+            // Валидация
+            if (!formData.date || !formData.time) {
+                alert('Пожалуйста, выберите дату и время');
+                return;
+            }
 
-        if (!/^\+?\d{10,15}$/.test(formData.phone)) {
-            alert('Введите корректный номер телефона');
-            return;
-        }
+            if (!/^\+?\d{10,15}$/.test(formData.phone)) {
+                alert('Введите корректный номер телефона');
+                return;
+            }
 
-        // Отправляем в Яндекс Форму
-        submitToYandexForm(formData, config.yandexFormId);
-    });
+            submitToYandexForm(formData, config.yandexFormId);
+        });
+    }
 
     // Функция отправки данных
     function submitToYandexForm(data, formId) {
-        // Создаем временную форму
         const form = document.createElement('form');
         form.action = `https://forms.yandex.ru/u/${formId}/`;
         form.method = 'POST';
         form.target = '_blank';
         form.style.display = 'none';
 
-        // Поля формы (должны соответствовать полям в Яндекс Форме)
         const fields = {
             'Имя': data.name,
             'Фамилия': data.lastName,
@@ -68,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
             'Услуга': data.service
         };
 
-        // Добавляем поля в форму
         for (const [name, value] of Object.entries(fields)) {
             const input = document.createElement('input');
             input.type = 'hidden';
@@ -81,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         form.submit();
         document.body.removeChild(form);
 
-        // Уведомление пользователю
-        alert(`Ваша заявка принята! Вы будете перенаправлены на страницу подтверждения.`);
+        alert('Ваша заявка принята! Вы будете перенаправлены на страницу подтверждения.');
     }
 });

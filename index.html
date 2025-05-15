@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Шапка -->
     <header class="header">
         <div class="container">
             <a href="#" class="logo">
@@ -19,7 +18,7 @@
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link">Главная</a></li>
                     <li><a href="#services" class="nav-link">Услуги</a></li>
-                    <li><a href="#portfolio" class="nav-link">Работы</a></li>
+                    <li><a href="#portfolio" class="nav-link">Портфолио</a></li>
                     <li><a href="#about" class="nav-link">Обо мне</a></li>
                     <li><a href="#booking" class="nav-link">Запись</a></li>
                     <li><a href="#contacts" class="nav-link">Контакты</a></li>
@@ -32,7 +31,6 @@
     </header>
 
     <main>
-        <!-- Герой с фото мастера -->
         <section class="hero" id="home" style="background-image: url('images/hero-bg.jpg')">
             <div class="container">
                 <div class="hero-content">
@@ -47,13 +45,11 @@
             </div>
         </section>
 
-        <!-- Услуги-папки -->
         <section class="service-folders" id="services">
             <div class="container">
                 <h2 class="section-title">Наши услуги</h2>
                 
                 <div class="folders-container">
-                    <!-- Папка Ламинирование -->
                     <div class="service-folder" data-service="lamination">
                         <div class="folder-front" style="background-image: url('images/lamination/12345.jpg')">
                             <h3>Ламинирование</h3>
@@ -62,8 +58,12 @@
                         </div>
                         <div class="folder-back">
                             <div class="service-gallery">
-                                <div class="gallery-item" style="background-image: url('images/lamination/12345.jpg')"></div>
-                                <div class="gallery-item" style="background-image: url('images/lamination/photo2.jpg')"></div>
+                                <div class="gallery-slide active" style="background-image: url('images/lamination/12345.jpg')"></div>
+                                <div class="gallery-slide" style="background-image: url('images/lamination/photo2.jpg')"></div>
+                                <div class="gallery-nav">
+                                    <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                                </div>
                             </div>
                             <div class="service-info">
                                 <p>Процедура, которая придает бровям идеальную форму на 4-6 недель</p>
@@ -72,7 +72,6 @@
                         </div>
                     </div>
                     
-                    <!-- Папка Коррекция -->
                     <div class="service-folder" data-service="correction">
                         <div class="folder-front" style="background-image: url('images/correction/before-after-1.jpg')">
                             <h3>Коррекция</h3>
@@ -81,8 +80,12 @@
                         </div>
                         <div class="folder-back">
                             <div class="service-gallery">
-                                <div class="gallery-item" style="background-image: url('images/correction/before-after-1.jpg')"></div>
-                                <div class="gallery-item" style="background-image: url('images/correction/photo2.jpg')"></div>
+                                <div class="gallery-slide active" style="background-image: url('images/correction/before-after-1.jpg')"></div>
+                                <div class="gallery-slide" style="background-image: url('images/correction/photo2.jpg')"></div>
+                                <div class="gallery-nav">
+                                    <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                                </div>
                             </div>
                             <div class="service-info">
                                 <p>Точная форма и аккуратные линии, подчеркивающие ваш взгляд</p>
@@ -91,7 +94,6 @@
                         </div>
                     </div>
                     
-                    <!-- Папка Окрашивание -->
                     <div class="service-folder" data-service="coloring">
                         <div class="folder-front" style="background-image: url('images/coloring/123.jpg')">
                             <h3>Окрашивание</h3>
@@ -100,8 +102,12 @@
                         </div>
                         <div class="folder-back">
                             <div class="service-gallery">
-                                <div class="gallery-item" style="background-image: url('images/coloring/123.jpg')"></div>
-                                <div class="gallery-item" style="background-image: url('images/coloring/photo2.jpg')"></div>
+                                <div class="gallery-slide active" style="background-image: url('images/coloring/123.jpg')"></div>
+                                <div class="gallery-slide" style="background-image: url('images/coloring/photo2.jpg')"></div>
+                                <div class="gallery-nav">
+                                    <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                                </div>
                             </div>
                             <div class="service-info">
                                 <p>Насыщенный цвет и выразительность на 3-4 недели</p>
@@ -110,7 +116,6 @@
                         </div>
                     </div>
                     
-                    <!-- Папка Придание формы -->
                     <div class="service-folder" data-service="shaping">
                         <div class="folder-front" style="background-image: url('images/shaping/1234.jpg')">
                             <h3>Придание формы</h3>
@@ -119,8 +124,12 @@
                         </div>
                         <div class="folder-back">
                             <div class="service-gallery">
-                                <div class="gallery-item" style="background-image: url('images/shaping/1234.jpg')"></div>
-                                <div class="gallery-item" style="background-image: url('images/shaping/photo2.jpg')"></div>
+                                <div class="gallery-slide active" style="background-image: url('images/shaping/1234.jpg')"></div>
+                                <div class="gallery-slide" style="background-image: url('images/shaping/photo2.jpg')"></div>
+                                <div class="gallery-nav">
+                                    <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                                </div>
                             </div>
                             <div class="service-info">
                                 <p>Создание идеального изгиба с учетом анатомии лица</p>
@@ -132,7 +141,6 @@
             </div>
         </section>
 
-        <!-- Портфолио -->
         <section class="portfolio" id="portfolio">
             <div class="container">
                 <h2 class="section-title">Наши работы</h2>
@@ -165,7 +173,6 @@
             </div>
         </section>
 
-        <!-- Обо мне -->
         <section class="about" id="about">
             <div class="container">
                 <h2 class="section-title">Обо мне</h2>
@@ -182,15 +189,12 @@
             </div>
         </section>
 
-        <!-- Запись -->
         <section class="booking" id="booking">
             <div class="container">
                 <h2 class="section-title">Онлайн запись</h2>
                 
                 <div class="booking-container">
-                    <div class="calendar-container" id="calendarContainer">
-                        <!-- Календарь будет загружен через JS -->
-                    </div>
+                    <div class="calendar-container" id="calendarContainer"></div>
                     
                     <div class="booking-form">
                         <form id="bookingForm">
@@ -215,6 +219,8 @@
                                 <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
                             </div>
                             
+                            <button type="submit" class="btn btn-primary">Подтвердить запись</button>
+                            
                             <div class="social-buttons">
                                 <a href="https://t.me/Serg_sss3" class="social-btn telegram">
                                     <i class="fab fa-telegram"></i> Telegram
@@ -223,8 +229,6 @@
                                     <i class="fab fa-whatsapp"></i> WhatsApp
                                 </a>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary">Подтвердить запись</button>
                         </form>
                     </div>
                 </div>
@@ -232,7 +236,6 @@
         </section>
     </main>
 
-    <!-- Подвал -->
     <footer class="footer" id="contacts">
         <div class="container">
             <div class="footer-content">
@@ -266,7 +269,6 @@
         </div>
     </footer>
 
-    <!-- Скрипты -->
     <script src="js/calendar.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>

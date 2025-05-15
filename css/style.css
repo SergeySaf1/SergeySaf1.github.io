@@ -216,75 +216,150 @@ section {
     white-space: nowrap;
 }
 
-/* Секция услуг */
-.services-grid {
+/* Стили для папок услуг */
+.service-folders {
+    padding: 80px 0;
+    background: #f9f9f9;
+}
+
+.folders-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    gap: 30px;
     margin-top: 40px;
 }
 
-.service-card {
-    background-color: white;
+.service-folder {
+    position: relative;
+    height: 400px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.folder-front, .folder-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
     border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.6s ease;
+}
+
+.folder-front {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+.folder-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    z-index: 1;
+}
+
+.folder-front h3 {
+    position: relative;
+    z-index: 2;
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.price-tag {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.folder-back {
+    transform: rotateY(180deg);
+    background: white;
     display: flex;
     flex-direction: column;
 }
 
-.service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-.service-content {
+.service-gallery {
+    position: relative;
     flex: 1;
+    overflow: hidden;
+}
+
+.gallery-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.gallery-slide.active {
+    opacity: 1;
+}
+
+.gallery-nav {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    z-index: 3;
 }
 
-.service-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: var(--primary-dark);
+.gallery-nav button {
+    background: rgba(255,255,255,0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.service-description {
-    margin-bottom: 20px;
-    color: var(--text);
-    flex-grow: 1;
+.gallery-nav button:hover {
+    background: var(--primary);
+    color: white;
 }
 
-.service-features {
-    list-style: none;
-    margin-bottom: 20px;
-}
-
-.service-features li {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.service-features i {
-    width: 20px;
+.service-info {
+    padding: 20px;
     text-align: center;
 }
 
-.service-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
+.service-info p {
+    margin-bottom: 15px;
+    color: var(--text);
 }
 
-.price {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary);
+/* Анимация переворота */
+.service-folder:hover .folder-front {
+    transform: rotateY(-180deg);
+}
+
+.service-folder:hover .folder-back {
+    transform: rotateY(0deg);
 }
 
 /* Галерея работ */
@@ -419,6 +494,8 @@ section {
     border-radius: 15px;
     box-shadow: var(--shadow);
     padding: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group {
@@ -458,10 +535,15 @@ section {
     cursor: pointer;
 }
 
+.form-submit {
+    order: -1;
+    margin-bottom: 20px;
+}
+
 .social-buttons {
     display: flex;
     gap: 15px;
-    margin: 20px 0;
+    margin-top: 20px;
 }
 
 .social-btn {
@@ -662,118 +744,6 @@ section {
     animation: fadeIn 0.8s ease forwards;
 }
 
-/* Стили для папок услуг */
-.service-folders {
-    padding: 80px 0;
-    background: #f9f9f9;
-}
-
-.folders-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.service-folder {
-    position: relative;
-    height: 350px;
-    perspective: 1000px;
-    cursor: pointer;
-}
-
-.folder-front, .folder-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: transform 0.6s ease;
-}
-
-.folder-front {
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-    transform: rotateY(0deg);
-    z-index: 2;
-}
-
-.folder-front::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-    z-index: 1;
-}
-
-.folder-front h3 {
-    position: relative;
-    z-index: 2;
-    color: white;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.price-tag {
-    position: relative;
-    z-index: 2;
-    display: inline-block;
-    background: var(--primary);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 700;
-}
-
-.folder-back {
-    transform: rotateY(180deg);
-    background: white;
-    display: flex;
-    flex-direction: column;
-}
-
-.service-gallery {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-    padding: 5px;
-}
-
-.gallery-item {
-    background-size: cover;
-    background-position: center;
-    border-radius: 8px;
-}
-
-.service-info {
-    padding: 20px;
-    text-align: center;
-}
-
-.service-info p {
-    margin-bottom: 15px;
-    color: var(--text);
-}
-
-/* Анимация переворота */
-.service-folder:hover .folder-front {
-    transform: rotateY(-180deg);
-}
-
-.service-folder:hover .folder-back {
-    transform: rotateY(0deg);
-}
-
 /* Адаптивность */
 @media (max-width: 992px) {
     .booking-container,
@@ -820,16 +790,8 @@ section {
         font-size: 1rem;
     }
     
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .social-buttons {
-        flex-direction: column;
-    }
-    
     .service-folder {
-        height: 300px;
+        height: 350px;
     }
     
     .folder-front h3 {
@@ -857,5 +819,9 @@ section {
     
     .portfolio-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
     }
 }

@@ -4,48 +4,37 @@ class BookingCalendar {
         this.currentDate = new Date();
         this.selectedDate = null;
         this.selectedTime = null;
-        this.workHours = ['09:30', '11:30', '13:00', '15:00', '17:00', '19:00']; // Обновленные временные слоты
+        this.workHours = ['09:30', '11:30', '13:00', '15:00', '17:00', '19:00'];
         this.bookedSlots = [];
+        this.workDays = [1, 2, 3, 4, 5]; // Пн-Пт
+        this.workStart = 9.5; // 9:30
+        this.workEnd = 19; // 19:00
         
         window.calendar = this;
-        
         this.init();
     }
 
     async init() {
-        await this.loadBookingsFromYandexTable();
+        await this.loadBookings();
         this.renderCalendar();
     }
 
-    async loadBookingsFromYandexTable() {
+    async loadBookings() {
         try {
-            const YANDEX_OAUTH_TOKEN = 'your_yandex_oauth_token';
-            const response = await fetch(
-                'https://cloud-api.yandex.net/v1/disk/resources/download?path=Новая таблица.xlsx',
-                { headers: { "Authorization": `OAuth ${YANDEX_OAUTH_TOKEN}` } }
-            );
-            const data = await response.json();
-            const file = await fetch(data.href);
-            const bookings = await file.json();
-            
-            this.bookedSlots = bookings.map(item => ({
-                date: item.date,
-                time: item.time
-            }));
+            // Здесь может быть запрос к API для получения занятых слотов
+            // Временные данные для примера
+            this.bookedSlots = [
+                { date: this.formatDate(new Date()), time: '11:30' },
+                { date: this.formatDate(new Date(Date.now() + 86400000)), time: '15:00' }
+            ];
         } catch (error) {
             console.error("Ошибка загрузки данных:", error);
-            // Запасной вариант на случай ошибки
-            this.bookedSlots = [
-                { date: '2025-06-15', time: '11:30' },
-                { date: '2025-06-16', time: '15:00' }
-            ];
         }
     }
 
     renderCalendar() {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
-        
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
@@ -62,20 +51,19 @@ class BookingCalendar {
             <div class="calendar-days">
         `;
         
-        // Пустые ячейки для дней предыдущего месяца
         for (let i = 0; i < startDay; i++) {
             calendarHTML += `<div class="calendar-day disabled"></div>`;
         }
         
-        // Дни текущего месяца
         for (let day = 1; day <= lastDay.getDate(); day++) {
             const date = new Date(year, month, day);
             const isWeekend = date.getDay() === 0 || date.getDay() === 6;
             const isPast = date < new Date() && date.getDate() !== new Date().getDate();
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isWorkDay = this.workDays.includes(date.getDay());
+            const dateStr = this.formatDate(date);
             
             calendarHTML += `
-                <div class="calendar-day ${isWeekend || isPast ? 'disabled' : ''}" 
+                <div class="calendar-day ${isWeekend || isPast || !isWorkDay ? 'disabled' : ''}" 
                      data-date="${dateStr}">
                     ${day}
                 </div>
@@ -84,8 +72,6 @@ class BookingCalendar {
         
         calendarHTML += `</div><div class="time-slots" id="timeSlots"></div>`;
         this.container.innerHTML = calendarHTML;
-        
-        // Назначаем обработчики после рендеринга
         this.setupEventListeners();
     }
 
@@ -121,18 +107,16 @@ class BookingCalendar {
     }
 
     setupEventListeners() {
-        // Обработчики для кнопок переключения месяцев
-        document.getElementById('prevMonth').addEventListener('click', () => {
+        document.getElementById('prevMonth')?.addEventListener('click', () => {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
             this.renderCalendar();
         });
         
-        document.getElementById('nextMonth').addEventListener('click', () => {
+        document.getElementById('nextMonth')?.addEventListener('click', () => {
             this.currentDate.setMonth(this.currentDate.getMonth() + 1);
             this.renderCalendar();
         });
         
-        // Обработчики для дней календаря
         document.querySelectorAll('.calendar-day:not(.disabled)').forEach(day => {
             day.addEventListener('click', () => {
                 document.querySelectorAll('.calendar-day').forEach(d => {
@@ -146,6 +130,11 @@ class BookingCalendar {
         });
     }
 
+    formatDate(date) {
+        const d = new Date(date);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
     getMonthName(monthIndex) {
         const months = [
             'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
@@ -153,20 +142,8 @@ class BookingCalendar {
         ];
         return months[monthIndex];
     }
-
-    // Метод для получения выбранной даты и времени
-    getSelectedBooking() {
-        if (this.selectedDate && this.selectedTime) {
-            return {
-                date: this.selectedDate,
-                time: this.selectedTime
-            };
-        }
-        return null;
-    }
 }
 
-// Инициализация календаря
 document.addEventListener('DOMContentLoaded', () => {
     new BookingCalendar('calendarContainer');
 });

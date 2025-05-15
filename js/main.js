@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navList = document.querySelector('.nav-list');
     
-    mobileMenuBtn.addEventListener('click', function() {
-        navList.classList.toggle('active');
-        mobileMenuBtn.innerHTML = navList.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-    });
+    if (mobileMenuBtn && navList) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navList.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navList.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+    }
 
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -25,8 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
                 
-                // Close mobile menu
-                if (navList.classList.contains('active')) {
+                if (navList && navList.classList.contains('active')) {
                     navList.classList.remove('active');
                     mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 }
@@ -42,21 +43,20 @@ document.addEventListener('DOMContentLoaded', function() {
         { img: 'images/coloring/123.jpg', category: 'coloring' }
     ];
 
-    const portfolioGrid = document.querySelector('.portfolio-grid');
-    const tabButtons = document.querySelectorAll('.tab-btn');
-
-    function renderPortfolio(category = 'lamination') {
+    function renderPortfolio(category = 'all') {
+        const portfolioGrid = document.querySelector('.portfolio-grid');
+        if (!portfolioGrid) return;
+        
         portfolioGrid.innerHTML = '';
         
         portfolioItems.forEach(item => {
             if (category === 'all' || item.category === category) {
                 const portfolioItem = document.createElement('div');
                 portfolioItem.className = 'portfolio-item';
-                portfolioItem.dataset.category = item.category;
                 portfolioItem.innerHTML = `
                     <img src="${item.img}" alt="Пример работы">
                     <div class="portfolio-overlay">
-                        <p>${getCategoryName(item.category)}</p>
+                        <h3>${getCategoryName(item.category)}</h3>
                     </div>
                 `;
                 portfolioGrid.appendChild(portfolioItem);
@@ -75,46 +75,67 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Filter portfolio
-    tabButtons.forEach(btn => {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            tabButtons.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             renderPortfolio(this.dataset.category);
         });
     });
 
-    // Initialize with lamination
-    renderPortfolio('lamination');
+    // Initialize portfolio
+    renderPortfolio('all');
 
     // Auto-scrolling photo folders
-    const folders = document.querySelectorAll('.service-folder');
-    
-    folders.forEach(folder => {
+    document.querySelectorAll('.service-folder').forEach(folder => {
         const gallery = folder.querySelector('.service-gallery');
-        const items = gallery.querySelectorAll('.gallery-item');
-        let currentIndex = 0;
-        let intervalId = null;
+        if (!gallery) return;
         
-        if (items.length > 1) {
-            folder.addEventListener('mouseenter', () => {
-                intervalId = setInterval(() => {
-                    currentIndex = (currentIndex + 1) % items.length;
-                    gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
-                }, 3000);
-            });
-            
-            folder.addEventListener('mouseleave', () => {
-                clearInterval(intervalId);
+        const slides = gallery.querySelectorAll('.gallery-slide');
+        const prevBtn = gallery.querySelector('.gallery-prev');
+        const nextBtn = gallery.querySelector('.gallery-next');
+        let currentIndex = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
             });
         }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+        // Автоперелистывание
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 3000);
+        }
+
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+
+        startSlideShow();
+        
+        folder.addEventListener('mouseenter', stopSlideShow);
+        folder.addEventListener('mouseleave', startSlideShow);
     });
 
     // Folder buttons functionality
     document.querySelectorAll('.folder-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Предотвращаем переворот папки при клике на кнопку
+            e.stopPropagation();
             
-            // Устанавливаем выбранную услугу в форме бронирования
             const serviceFolder = this.closest('.service-folder');
             if (serviceFolder) {
                 const serviceName = serviceFolder.dataset.service;
@@ -123,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (serviceSelect) {
                     serviceSelect.value = serviceName;
                     
-                    // Прокручиваем к форме бронирования
                     const bookingSection = document.getElementById('booking');
                     if (bookingSection) {
                         window.scrollTo({
