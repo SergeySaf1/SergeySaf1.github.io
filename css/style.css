@@ -825,3 +825,29 @@ section {
         flex-direction: column;
     }
 }
+/* Добавить в конец файла */
+.services-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.checkbox-label:hover {
+    background-color: #e0e0e0;
+}
+
+.checkbox-label input {
+    width: auto;
+    margin: 0;
+}

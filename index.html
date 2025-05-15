@@ -141,44 +141,12 @@
             </div>
         </section>
 
-        <section class="portfolio" id="portfolio">
-            <div class="container">
-                <h2 class="section-title">Наши работы</h2>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item">
-                        <img src="images/lamination/12345.jpg" alt="Результат ламинирования">
-                        <div class="portfolio-overlay">
-                            <h3>Ламинирование</h3>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="images/correction/before-after-1.jpg" alt="До и после коррекции">
-                        <div class="portfolio-overlay">
-                            <h3>Коррекция</h3>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="images/coloring/123.jpg" alt="Результат окрашивания">
-                        <div class="portfolio-overlay">
-                            <h3>Окрашивание</h3>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="images/shaping/1234.jpg" alt="Придание формы">
-                        <div class="portfolio-overlay">
-                            <h3>Придание формы</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="about" id="about">
             <div class="container">
                 <h2 class="section-title">Обо мне</h2>
                 <div class="about-content">
                     <div class="about-img">
-                        <img src="images/master-photo-full.jpg" alt="Татьяна Сафронова">
+                        <img src="images/hero-bg.jpg" alt="Татьяна Сафронова">
                     </div>
                     <div class="about-text">
                         <p>Привет! Меня зовут Татьяна, я профессиональный бровист и мастер по ламинированию ресниц с 5-летним опытом работы.</p>
@@ -192,40 +160,62 @@
         <section class="booking" id="booking">
             <div class="container">
                 <h2 class="section-title">Онлайн запись</h2>
-                
+         
                 <div class="booking-container">
                     <div class="calendar-container" id="calendarContainer"></div>
-                    
+            
                     <div class="booking-form">
                         <form id="bookingForm">
                             <div class="form-group">
                                 <label for="name">Ваше имя</label>
                                 <input type="text" id="name" placeholder="Введите ваше имя" required>
                             </div>
-                            
+                    
                             <div class="form-group">
-                                <label for="service">Услуга</label>
-                                <select id="service" required>
-                                    <option value="ламинирование">Ламинирование бровей</option>
-                                    <option value="коррекция">Коррекция бровей</option>
-                                    <option value="окрашивание">Окрашивание бровей</option>
-                                    <option value="придание формы">Придание формы</option>
-                                    <option value="комплекс">Комплекс (брови+ресницы)</option>
-                                </select>
+                                <label>Выберите услуги</label>
+                                <div class="services-checkboxes">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="ламинирование"> Ламинирование бровей (2500 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="коррекция"> Коррекция бровей (1000 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="окрашивание"> Окрашивание бровей (1500 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="придание формы"> Придание формы (1500 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="комплекс"> Комплекс (брови+ресницы) (3500 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="осветление"> Осветление (1200 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="депиляция"> Депиляция над губой (800 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="ламинирование ресниц"> Ламинирование ресниц (2800 ₽)
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="service" value="окрашивание ресниц"> Окрашивание ресниц (1200 ₽)
+                                    </label>
+                                </div>
                             </div>
-                            
+                    
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
                                 <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
                             </div>
-                            
+                    
                             <button type="submit" class="btn btn-primary">Подтвердить запись</button>
-                            
+                    
                             <div class="social-buttons">
-                                <a href="https://t.me/Serg_sss3" class="social-btn telegram">
+                                <a href="https://t.me/serg_sss3" class="social-btn telegram">
                                     <i class="fab fa-telegram"></i> Telegram
                                 </a>
-                                <a href="https://wa.me/79259713336" class="social-btn whatsapp">
+                                <a href="https://wa.me/79164871787" class="social-btn whatsapp">
                                     <i class="fab fa-whatsapp"></i> WhatsApp
                                 </a>
                             </div>
@@ -241,8 +231,8 @@
             <div class="footer-content">
                 <div class="footer-col">
                     <h3>Контакты</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Красивая, 15</p>
-                    <p><i class="fas fa-phone"></i> +7 (925) 971-33-36</p>
+                    <p><i class="fas fa-map-marker-alt"></i> г. Железнодорожный, ул. Безымянная, 8</p>
+                    <p><i class="fas fa-phone"></i> +7 (916) 487 17 87</p>
                     <p><i class="fas fa-envelope"></i> info@lashesbrows.ru</p>
                 </div>
                 
@@ -253,18 +243,10 @@
                     <p>Вс: выходной</p>
                 </div>
                 
-                <div class="footer-col">
-                    <h3>Социальные сети</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                    </div>
-                </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 LashesBrows. Все права защищены.</p>
+                <p>&copy; 2025 LashesBrows. Все права защищены.</p>
             </div>
         </div>
     </footer>

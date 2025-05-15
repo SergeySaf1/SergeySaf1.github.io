@@ -15,24 +15,27 @@ class BookingCalendar {
     }
 
     async init() {
-        await this.loadBookings();
-        this.renderCalendar();
-    }
-
-    async loadBookings() {
         try {
-            // Здесь может быть запрос к API для получения занятых слотов
-            // Временные данные для примера
-            this.bookedSlots = [
-                { date: this.formatDate(new Date()), time: '11:30' },
-                { date: this.formatDate(new Date(Date.now() + 86400000)), time: '15:00' }
-            ];
+            // Загрузка занятых слотов (заглушка)
+            this.bookedSlots = await this.loadBookings();
+            this.renderCalendar();
         } catch (error) {
-            console.error("Ошибка загрузки данных:", error);
+            console.error("Ошибка инициализации календаря:", error);
+            this.renderError();
         }
     }
 
+    async loadBookings() {
+        // В реальном проекте здесь будет запрос к API
+        return [
+            { date: this.formatDate(new Date()), time: '11:30' },
+            { date: this.formatDate(new Date(Date.now() + 86400000)), time: '15:00' }
+        ];
+    }
+
     renderCalendar() {
+        if (!this.container) return;
+
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
         const firstDay = new Date(year, month, 1);
@@ -51,10 +54,12 @@ class BookingCalendar {
             <div class="calendar-days">
         `;
         
+        // Пустые ячейки для дней предыдущего месяца
         for (let i = 0; i < startDay; i++) {
             calendarHTML += `<div class="calendar-day disabled"></div>`;
         }
         
+        // Дни текущего месяца
         for (let day = 1; day <= lastDay.getDate(); day++) {
             const date = new Date(year, month, day);
             const isWeekend = date.getDay() === 0 || date.getDay() === 6;
@@ -77,6 +82,8 @@ class BookingCalendar {
 
     renderTimeSlots(date) {
         const timeSlotsContainer = document.getElementById('timeSlots');
+        if (!timeSlotsContainer) return;
+        
         timeSlotsContainer.innerHTML = '<h4>Доступное время:</h4>';
         
         this.workHours.forEach(time => {
@@ -128,6 +135,15 @@ class BookingCalendar {
                 this.renderTimeSlots(this.selectedDate);
             });
         });
+    }
+
+    renderError() {
+        this.container.innerHTML = `
+            <div class="calendar-error">
+                <p>Не удалось загрузить календарь. Пожалуйста, попробуйте позже.</p>
+                <button onclick="location.reload()">Обновить</button>
+            </div>
+        `;
     }
 
     formatDate(date) {

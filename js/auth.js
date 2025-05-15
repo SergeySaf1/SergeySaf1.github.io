@@ -26,11 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
         bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
+            const selectedServices = Array.from(document.querySelectorAll('input[name="service"]:checked'))
+                .map(checkbox => checkbox.value)
+                .join(', ');
+
             const formData = {
                 name: document.getElementById('name').value,
                 lastName: '',
                 phone: document.getElementById('phone').value,
-                service: document.getElementById('service').value,
+                service: selectedServices || 'Не указано',
                 date: window.calendar?.selectedDate || '',
                 time: window.calendar?.selectedTime || ''
             };
@@ -43,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!/^\+?\d{10,15}$/.test(formData.phone)) {
                 alert('Введите корректный номер телефона');
+                return;
+            }
+
+            if (!selectedServices) {
+                alert('Пожалуйста, выберите хотя бы одну услугу');
                 return;
             }
 
